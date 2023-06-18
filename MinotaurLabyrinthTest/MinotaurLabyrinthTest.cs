@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.TestHost;
-using MinotaurLabyrinth;
+﻿using MinotaurLabyrinth;
 
 namespace MinotaurLabyrinthTest
 {
@@ -7,8 +6,7 @@ namespace MinotaurLabyrinthTest
     public class Tests
     {
         [TestMethod]
-
-        public void UserGenerated_tunnel()
+        public void UserGeneratedTunnel()
         {
             Room room = RoomFactory.Instance.BuildRoom(RoomType.Tunnel);
             string className = room.GetType().Name;
@@ -16,7 +14,7 @@ namespace MinotaurLabyrinthTest
         }
 
         [TestMethod]
-        public void DeactivateTunnel_ShouldSetIsActiveToFalse()
+        public void DeactivateTunnelIsActiveToFalse()
         {
 
             Tunnel tunnel = new Tunnel();
@@ -27,10 +25,11 @@ namespace MinotaurLabyrinthTest
         [TestMethod]
         public void PitRoomTest()
         {
-            RandomNumberGenerator.SetSeed(1);
-
+            int seedVar = 1;
+            RandomNumberGenerator.SetSeed(seedVar);
             Pit pitRoom = new Pit();
-            Hero hero = new Hero();
+            Location start = new Location(0, 1);
+            Hero hero = new Hero(start);
             Map map = new Map(1, 1);
 
             pitRoom.Activate(hero, map);

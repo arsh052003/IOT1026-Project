@@ -17,22 +17,22 @@
 
 
             Console.Write("Enter a seed to generate specific map layout: ");
-            seed = Console.ReadLine();
 
             bool result = SeedIsValid(seed);
 
             if (result)
             {
-                int newseed = Int32.Parse(seed);
-                LabyrinthGame game = new(mapSize, newseed);
+                int newSeed = Int32.Parse(seed);
+                LabyrinthGame game = new(mapSize, newSeed);
                 game.Run();
             }
+
             else
             {
                 ConsoleHelper.Write("User input is invalid random map will be generated \n", ConsoleColor.Yellow);
-                int newseed = Guid.NewGuid().GetHashCode();
-                Console.WriteLine($"generted new seed that user can use to play again: {0}", newseed);
-                LabyrinthGame game = new(mapSize, newseed);
+                int newSeed = Guid.NewGuid().GetHashCode();
+                Console.WriteLine($"generted new seed that user can use to play again: {0}", newSeed);
+                LabyrinthGame game = new(mapSize, newSeed);
                 game.Run();
             }
 
