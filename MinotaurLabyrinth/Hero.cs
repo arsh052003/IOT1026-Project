@@ -3,6 +3,10 @@
     // Represents the player in the game.
     public class Hero
     {
+        public Hero()
+        {
+
+        }
         // Creates a new player that starts at the given location.
         public Hero(Location start) => Location = start;
         // Contains all the commands that a player can access.

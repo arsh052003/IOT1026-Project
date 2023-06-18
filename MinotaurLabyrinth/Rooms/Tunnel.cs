@@ -5,6 +5,7 @@
     /// </summary>
     public class Tunnel : Room
     {
+        public Location tunnelEndLocation = new Location(0, 0);
         static Tunnel()
         {
             RoomFactory.Instance.Register(RoomType.Tunnel, () => new Tunnel());
@@ -20,6 +21,16 @@
             IsActive = true;
         }
 
+        public void DeactivateTunnel()
+        {
+            IsActive = false;
+        }
+
+        // public Location TunnelEndLoc(Location tunnelendlocation)
+        // {
+        //     return tunnelendlocation;
+        // }
+
         /// <summary>
         /// Activates the pit, causing the hero to potentially fall in and face consequences.
         /// </summary>
@@ -30,12 +41,12 @@
                 ConsoleHelper.WriteLine("You walk into the room and the floor drops you in a tunnel that no one knows where it is headed to!", ConsoleColor.Red);
                 // Could update these probabilities to be based off the hero attributes
                 Location tunnelNewLocation = ProceduralGenerator.GetRandomLocation();
-                Location tunnelEndLocation = ProceduralGenerator.GetRandomLocation();
-
-                Console.WriteLine($"The tunnel opens at ({0}, {1})", tunnelEndLocation.Row, tunnelEndLocation.Column);
-                if (map.IsOnMap(tunnelEndLocation))
+                this.tunnelEndLocation = ProceduralGenerator.GetRandomLocation();
+                //this.TunnelEndLoc(tunnelEndLocation);
+                Console.WriteLine($"The tunnel opens at ({0}, {1})", this.tunnelEndLocation.Row, this.tunnelEndLocation.Column);
+                if (map.IsOnMap(this.tunnelEndLocation))
                 {
-                    hero.Location = tunnelEndLocation;
+                    hero.Location = this.tunnelEndLocation;
                 }
                 Console.WriteLine($"{0}, {1}, hero.Location.Row, hero.Location.Column");
                 this.ActivateTunnel();

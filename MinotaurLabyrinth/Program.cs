@@ -4,6 +4,7 @@
     {
         static void Main()
         {
+            string seed = "";
             ConsoleHelper.Write("Do you want to play a small, medium, or large game? ", ConsoleColor.White);
 
             // Default game setting in the event user does not input a proper size.
@@ -14,11 +15,36 @@
                 _ => Size.Medium // Make a medium game if input is "medium" or anything else
             };
 
-            // A random seed (Guid.NewGuid().GetHashCode()) is used for each game.
-            // Consider adding a way the user can choose a game seed (this is useful for testing as well).
-            // If the user doesn't enter a seed, you can use the random seed
-            LabyrinthGame game = new(mapSize, Guid.NewGuid().GetHashCode());
-            game.Run();
+
+            Console.Write("Enter a seed to generate specific map layout: ");
+            seed = Console.ReadLine();
+
+            bool result = SeedIsValid(seed);
+
+            if (result)
+            {
+                int newseed = Int32.Parse(seed);
+                LabyrinthGame game = new(mapSize, newseed);
+                game.Run();
+            }
+            else
+            {
+                ConsoleHelper.Write("User input is invalid random map will be generated \n", ConsoleColor.Yellow);
+                int newseed = Guid.NewGuid().GetHashCode();
+                Console.WriteLine($"generted new seed that user can use to play again: {0}", newseed);
+                LabyrinthGame game = new(mapSize, newseed);
+                game.Run();
+            }
+
+            bool SeedIsValid(string seed)
+            {
+                if (seed.All(char.IsDigit) && seed != "")
+                    return true;
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
 }
