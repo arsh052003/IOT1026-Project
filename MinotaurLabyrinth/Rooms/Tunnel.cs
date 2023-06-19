@@ -3,10 +3,13 @@
     /// <summary>
     /// Represents a pit room, which contains a dangerous pit that the hero can fall into.
     /// </summary>
+
+    //Create Tunnel class inherits from the Room base class
     public class Tunnel : Room
     {
         static Tunnel()
         {
+            // Register the tunnel room type with the RoomFactory.
             RoomFactory.Instance.Register(RoomType.Tunnel, () => new Tunnel());
         }
 
@@ -17,6 +20,7 @@
         public override bool IsActive { get; protected set; } = true;
         public void ActivateTunnel()
         {
+            // Activate the state of tunnel.
             IsActive = true;
         }
 
@@ -35,13 +39,13 @@
         /// </summary>
         public override void Activate(Hero hero, Map map)
         {
+            // if the user enters in the tunnel room he gets thrown into new room
             if (IsActive)
             {
                 ConsoleHelper.WriteLine("You walk into the room and the floor drops you in a tunnel that no one knows where it is headed to!", ConsoleColor.Red);
                 // Could update these probabilities to be based off the hero attributes
                 Location tunnelNewLocation = ProceduralGenerator.GetRandomLocation();
                 Location tunnelEndLocation = ProceduralGenerator.GetRandomLocation();
-                //this.TunnelEndLoc(tunnelEndLocation);
                 Console.WriteLine($"The tunnel opens at ({0}, {1})", tunnelEndLocation.Row, tunnelEndLocation.Column);
                 if (map.IsOnMap(tunnelEndLocation))
                 {
@@ -55,6 +59,7 @@
         /// <inheritdoc/>                                
         public override DisplayDetails Display()
         {
+            // Returns the display details of the tunnel room.
             return IsActive ? new DisplayDetails($"[{Type.ToString()[0]}]", ConsoleColor.Red)
                             : base.Display();
         }
@@ -73,6 +78,7 @@
                 {
                     return true;
                 }
+                // Print messages when the hero is adjacent to the tunnel.
                 if (heroDistance == 0)
                 {
                     ConsoleHelper.WriteLine("You dropped into tunnel", ConsoleColor.DarkGray);
